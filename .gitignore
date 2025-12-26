@@ -1,0 +1,23 @@
+# 1. Virtual Environment
+venv/
+env/
+.env
+
+# 2. Python Cache
+__pycache__/
+*.pyc
+
+# 3. Data Files
+data/raw/
+data/processed/
+
+# model < 100MB
+# data/models/*.joblib
+
+# 4. IDE
+.vscode/
+.idea/
+
+# 5. OS Generated Files
+.DS_Store
+Thumbs.db
