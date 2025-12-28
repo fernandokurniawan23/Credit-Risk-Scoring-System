@@ -45,6 +45,21 @@ def create_domain_features(df: pd.DataFrame) -> pd.DataFrame:
     # Did they borrow more than the item value? (Cash out)
     df['GOODS_LOAN_RATIO'] = df['AMT_GOODS_PRICE'] / df['AMT_CREDIT']
     
+    # 5. Document Age in Years (Interpretability)
+    # Converts raw negative days (e.g., -291) to positive years (e.g., 0.8)
+    # Easier for SHAP and humans to understand "how old is the ID".
+    df['ID_AGE_YEARS'] = df['DAYS_ID_PUBLISH'].abs() / 365
+    
+    # 6. ID Age to Client Age Ratio (Risk Logic)
+    # Logic: A 45-year-old with a 2-month-old ID is more suspicious than
+    # a 20-year-old with a 2-month-old ID.
+    # Formula: ID_Age / Client_Age
+    # High Ratio = Normal (Long term ID holder)
+    # Very Low Ratio = Suspicious (Fresh ID relative to age)
+    # Note: We use max(..., 1) or abs() to avoid division by zero or negative ages
+    client_age_years = df['DAYS_BIRTH'].abs() / 365
+    df['ID_TO_AGE_RATIO'] = df['ID_AGE_YEARS'] / client_age_years
+    
     return df
 
 def encode_categoricals(df: pd.DataFrame) -> pd.DataFrame:

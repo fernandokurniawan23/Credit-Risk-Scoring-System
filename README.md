@@ -41,22 +41,22 @@ graph LR
 ### 1. The Dashboard (Frontend)
 
 **Scenario A: High Risk Applicant (REJECT)**
-The model detects high-risk applicants based on poor external scores and high debt-to-income ratios. The SHAP chart (red bars) clearly visualizes the risk drivers.
+The model detects high-risk applicants based on poor external scores (EXT_SOURCE_3) and short employment history. The SHAP chart (Red Bars) clearly visualizes the risk drivers.
 
 ![Reject Scenario](images/reject.png)
 
 **Scenario B: Low Risk Applicant (APPROVE)**
-Ideal customers with stable employment and good credit history.
+Ideal customers with stable employment, long-term identity validity, and good credit history.
 
 ![Approve Scenario](images/approve.png)
 
 **Scenario C: Borderline Applicant (MANUAL REVIEW)**
-The system flags medium-risk cases for human intervention, preventing auto-rejection of potential good customers.
+The Hybrid Logic in Action: An applicant has a good income, but their Identity Document was published 0 days ago despite being 58 years old. The system overrides the AI score and flags this for Manual Review.
 
 ![Manual Review Scenario](images/manual_review.png)
 
 ### 2. The API (Backend)
-The system exposes a RESTful API documented automatically via Swagger UI. It accepts JSON payloads and returns the Probability of Default (PD), Credit Score, and SHAP explanations.
+The system exposes a robust RESTful API documented automatically via Swagger UI. It uses Pydantic for strict input validation to prevent data leakage or format errors.
 
 ![API Documentation](images/api_docs.png)
 
@@ -67,9 +67,9 @@ The system exposes a RESTful API documented automatically via Swagger UI. It acc
 * **Language:** Python 3.10+
 * **Data Processing:** Pandas, NumPy
 * **Machine Learning:** XGBoost, Scikit-Learn, Joblib
-* **Explainability:** SHAP
+* **Explainability:** SHAP (Shapley Additive exPlanations)
 * **API Framework:** FastAPI, Uvicorn, Pydantic
-* **Frontend:** Streamlit, Altair (Charts)
+* **Frontend:** Streamlit, Plotly Express
 
 ---
 

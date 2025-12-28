@@ -10,7 +10,7 @@ Features:
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import pandas as pd
+from typing import Optional
 import sys
 import os
 
@@ -35,8 +35,14 @@ class LoanApplication(BaseModel):
     AMT_GOODS_PRICE: float
     DAYS_EMPLOYED: int
     DAYS_BIRTH: int
-    EXT_SOURCE_2: float
-    EXT_SOURCE_3: float
+    DAYS_ID_PUBLISH: int
+    EXT_SOURCE_1: Optional[float] = 0.0 # Optional, default 0
+    EXT_SOURCE_2: Optional[float] = 0.0
+    EXT_SOURCE_3: Optional[float] = 0.0
+    
+    # optional
+    NAME_EDUCATION_TYPE: Optional[str] = "Secondary / secondary special"
+    NAME_FAMILY_STATUS: Optional[str] = "Married"
 
 @app.get("/")
 def health_check():
